@@ -12,7 +12,7 @@ path = Path(__file__).parent.resolve()
 
 effNetv2Model = keras.models.load_model(path / "EfficientNetV2B0.h5")
 effNetv1Model = keras.models.load_model(path / "EfficientNetV1B0.h5")
-vitModel = keras.models.load_model(path / "vitModel.h5")
+vitModel = keras.models.load_model(path / "ViTTL8classification.h5")
 
 with open(path / "classes.json", "r") as f:
     class_names = list(json.load(f).keys())
