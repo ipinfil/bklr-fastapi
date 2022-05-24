@@ -26,10 +26,10 @@ model_data = {
         'model' : effNetv1Model,
         'preprocess' : tf.keras.applications.efficientnet.preprocess_input
     },
-    'vit' : {
-        'model' : vitModel,
-        'preprocess' : None
-    }
+    # 'vit' : {
+    #     'model' : vitModel,
+    #     'preprocess' : None
+    # }
 }
 
 async def classify(img, model, preprocess = None):
