@@ -1,6 +1,5 @@
 from pathlib import Path
 from fastapi import FastAPI, File, UploadFile
-from classification.classify import classify
 import tensorflow as tf
 from tensorflow import keras
 from time import time
