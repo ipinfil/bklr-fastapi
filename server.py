@@ -16,11 +16,6 @@ effNetv1Model = keras.models.load_model(path / "EfficientNetV1B0.h5")
 # vitModel = keras.models.load_model(path / "ViTTL8classification.h5") TODO:
 
 
-
-class Item(BaseModel):
-    model: Form(...)
-    file: UploadFile = File(...)
-
 with open(path / "classes.json", "r") as f:
     class_names = list(json.load(f).keys())
 
@@ -52,11 +47,11 @@ async def classify(img, model, preprocess = None):
 
 
 @app.post("/predict")
-async def predict(item: Item):
-    data = model_data[item.model]
+async def predict(model: Form(...), file: UploadFile = File(...)):
+    data = model_data[model]
     model, preprocess = data['model'], data['preprocess']
 
-    img = Image.open(io.BytesIO(await item.file.read()))
+    img = Image.open(io.BytesIO(await file.read()))
     predictions = await classify(img, model, preprocess)
     return predictions
 
