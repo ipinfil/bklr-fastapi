@@ -1,6 +1,6 @@
 from pathlib import Path
 from pydantic import BaseModel
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, Form, UploadFile
 import tensorflow as tf
 from tensorflow import keras
 from time import time
@@ -18,7 +18,7 @@ effNetv1Model = keras.models.load_model(path / "EfficientNetV1B0.h5")
 
 
 class Item(BaseModel):
-    model: str
+    model: Form(...)
     file: UploadFile = File(...)
 
 with open(path / "classes.json", "r") as f:
