@@ -1,4 +1,5 @@
 from pathlib import Path
+from pydantic import BaseModel
 from fastapi import FastAPI, File, UploadFile
 import tensorflow as tf
 from tensorflow import keras
@@ -13,6 +14,12 @@ path = Path(__file__).parent.resolve()
 effNetv2Model = keras.models.load_model(path / "EfficientNetV2B0.h5")
 effNetv1Model = keras.models.load_model(path / "EfficientNetV1B0.h5")
 # vitModel = keras.models.load_model(path / "ViTTL8classification.h5") TODO:
+
+
+
+class Item(BaseModel):
+    model: str
+    file: UploadFile = File(...)
 
 with open(path / "classes.json", "r") as f:
     class_names = list(json.load(f).keys())
@@ -45,11 +52,11 @@ async def classify(img, model, preprocess = None):
 
 
 @app.post("/predict")
-async def predict(model: str, file: UploadFile = File(...)):
-    data = model_data[model]
+async def predict(item: Item):
+    data = model_data[item.model]
     model, preprocess = data['model'], data['preprocess']
 
-    img = Image.open(io.BytesIO(await file.read()))
+    img = Image.open(io.BytesIO(await item.file.read()))
     predictions = await classify(img, model, preprocess)
     return predictions
 
