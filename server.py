@@ -47,7 +47,7 @@ async def classify(img, model, preprocess = None):
 
 
 @app.post("/predict")
-async def predict(model: Form(...), file: UploadFile = File(...)):
+async def predict(model: str = Form(...), file: UploadFile = File(...)):
     data = model_data[model]
     model, preprocess = data['model'], data['preprocess']
 
