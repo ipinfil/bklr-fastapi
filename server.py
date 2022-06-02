@@ -24,7 +24,7 @@ model_data = {
         'model' : effNetv2Model,
         'preprocess' : None
     },
-    'efficientnetv1' : {
+    'efficientnet' : {
         'model' : effNetv1Model,
         'preprocess' : tf.keras.applications.efficientnet.preprocess_input
     },
